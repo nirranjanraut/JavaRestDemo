@@ -6,8 +6,11 @@
 package constants;
 
 /**
- *
- * @author NiRRaNjAN
+ * @author              NiRRaNjAN
+ * @stackoverflow       http://stackoverflow.com/users/1911941/elite
+ * @playstore           https://play.google.com/store/apps/developer?id=NiRRaNjAN+RauT
+ * @facebook            https://www.facebook.com/NiRRaNjAN.RauT
+ * @gmail               nirranjan.raut@gmail.com
  */
 public interface Constants {
 
