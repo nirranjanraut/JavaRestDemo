@@ -135,15 +135,18 @@ public class Service implements Constants {
                 status.put(STATUS, "Failed to connect to database : " + DBUtil.getErrorMessage());
                 return status;
             }
-            String where = column;
-            if (EQ.equalsIgnoreCase(condition)) {
-                where += "='" + val + "'";
-            } else if (GT.equalsIgnoreCase(condition)) {
-                where += ">'" + val + "'";
-            } else if (LT.equalsIgnoreCase(condition)) {
-                where += "<'" + val + "'";
-            } else {
-                where += "='" + val + "'";
+            String where = null;
+            if(column != null && !column.isEmpty() && val != null && !val.isEmpty() && condition != null && !condition.isEmpty()) {
+                where = column;
+                if (EQ.equalsIgnoreCase(condition)) {
+                    where += "='" + val + "'";
+                } else if (GT.equalsIgnoreCase(condition)) {
+                    where += ">'" + val + "'";
+                } else if (LT.equalsIgnoreCase(condition)) {
+                    where += "<'" + val + "'";
+                } else {
+                    where += "='" + val + "'";
+                }
             }
             if(Database.update(table, where, values, connection)) {
                 status.put(STATUS, SUCCESS);
@@ -172,16 +175,45 @@ public class Service implements Constants {
                 status.put(STATUS, "Failed to connect to database : " + DBUtil.getErrorMessage());
                 return status;
             }
-            String where = column;
-            if (EQ.equalsIgnoreCase(condition)) {
-                where += "='" + val + "'";
-            } else if (GT.equalsIgnoreCase(condition)) {
-                where += ">'" + val + "'";
-            } else if (LT.equalsIgnoreCase(condition)) {
-                where += "<'" + val + "'";
-            } else {
-                where += "='" + val + "'";
+            String where = null;
+            if(column != null && !column.isEmpty() && val != null && !val.isEmpty() && condition != null && !condition.isEmpty()) {
+                where = column;
+                if (EQ.equalsIgnoreCase(condition)) {
+                    where += "='" + val + "'";
+                } else if (GT.equalsIgnoreCase(condition)) {
+                    where += ">'" + val + "'";
+                } else if (LT.equalsIgnoreCase(condition)) {
+                    where += "<'" + val + "'";
+                } else {
+                    where += "='" + val + "'";
+                }
             }
+            if(Database.delete(table, where, connection)) {
+                status.put(STATUS, SUCCESS);
+            } else {
+                status.put(STATUS, "Failed to delete records.");
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            status.put(STATUS, e.getMessage());
+        }
+        return status;
+    }
+
+    @DELETE
+    @Path("/{db}/{table}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
+    public HashMap deleteAll(@PathParam("db") String db, @PathParam("table") String table) {
+        HashMap<String, Object> status = new HashMap<String, Object>();
+        try {
+            Connection connection = DBUtil.getConnection(db);
+            if (connection == null || connection.isClosed()) {
+                status.put(STATUS, "Failed to connect to database : " + DBUtil.getErrorMessage());
+                return status;
+            }
+            String where = null;
             if(Database.delete(table, where, connection)) {
                 status.put(STATUS, SUCCESS);
             } else {
