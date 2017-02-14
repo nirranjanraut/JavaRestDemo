@@ -164,7 +164,7 @@ public class Service implements Constants {
     @DELETE
     @Path("/{db}/{table}/{column}/{value}/{condition}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
+    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.APPLICATION_FORM_URLENCODED})
     public HashMap delete(@PathParam("db") String db, @PathParam("table") String table,
             @PathParam("column") String column, @PathParam("value") String val,
             @PathParam("condition") String condition) {
@@ -204,7 +204,7 @@ public class Service implements Constants {
     @DELETE
     @Path("/{db}/{table}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
+    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.APPLICATION_FORM_URLENCODED})
     public HashMap deleteAll(@PathParam("db") String db, @PathParam("table") String table) {
         HashMap<String, Object> status = new HashMap<String, Object>();
         try {
