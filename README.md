@@ -4,7 +4,7 @@ Java RESTFul web services.
 
 These rest services can be used with any database and tables in MySQL database.
 
-You can check how to run this code <a href='https://www.youtube.com/watch?v=HzRb9g5_hKY'>here</a>
+You can check how to run this code <a target="_blank" href='https://www.youtube.com/watch?v=HzRb9g5_hKY'>here</a>
 
 Open given folder in NetBeans.
 
