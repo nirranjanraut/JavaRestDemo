@@ -71,6 +71,40 @@ public class Service implements Constants {
         return records;
     }
 
+    @GET
+    @Path("/{db}/{table}/like")
+    @Produces(MediaType.APPLICATION_JSON)
+    public HashMap<String, Object> selectLike(@PathParam("db") String db,
+            @PathParam("table") String table, @Context UriInfo uriInfo) {
+        HashMap<String, Object> records = new HashMap<String, Object>();
+        try {
+            Connection connection = DBUtil.getConnection(db);
+            if (connection == null || connection.isClosed()) {
+                records.put(STATUS, "Failed to connect to database : " + DBUtil.getErrorMessage());
+                return records;
+            }
+            String where = "";
+            MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+            int i=0;
+            for(String key : queryParams.keySet()) {
+                String value = queryParams.get(key).get(0);
+                if(i != 0) {
+                    where += " AND ";
+                }
+                where += key + " LIKE '%" + value + "%'";
+                i++;
+            }
+            ArrayList<HashMap<String, Object>> rows = Database.selectMap(table, null, where, connection);
+            records.put(STATUS, SUCCESS);
+            records.put(RECORDS, rows);
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+            records.put(STATUS, e.getMessage());
+        }
+        return records;
+    }
+
     @POST
     @Path("/{db}/{table}")
     @Produces(MediaType.APPLICATION_JSON)
