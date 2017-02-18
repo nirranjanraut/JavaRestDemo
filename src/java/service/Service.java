@@ -147,7 +147,7 @@ public class Service implements Constants {
     @PUT
     @Path("/{db}/{table}/{column}/{value}/{condition}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN})
+    @Consumes({MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.APPLICATION_FORM_URLENCODED})
     public HashMap update(@PathParam("db") String db, @PathParam("table") String table,
             @PathParam("column") String column, @PathParam("value") String val,
             @PathParam("condition") String condition, @Context UriInfo uriInfo) {
